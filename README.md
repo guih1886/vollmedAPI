@@ -125,11 +125,12 @@ Vollmed é um projeto que simula o back-end de uma aplicação mobile de uma cl�
                 "complemento": ""
             }
         }
-    ],
-    */ retorno para paginação omitido/* 
+    ]
   }
   ```
   A resposta é um array com a chave `content` e com os valores dos médicos ou pacientes cadastrados no banco de dados.
+  <br/>
+  Ao final do array content, temos outras configurações para paginação, aqui, o código foi omitido.
 
 ####
 
@@ -154,7 +155,57 @@ Vollmed é um projeto que simula o back-end de uma aplicação mobile de uma cl�
     }
   }
   ```
-  A resposta é um JSON com os dados do paciente ou médico cadastrado com o `{id}` informado.  
+  A resposta é um JSON com os dados do paciente ou médico cadastrado com o `{id}` informado.
+
+####
+
+- `PUT /pacientes` & `PUT /medicos`: Essas rotas tem a finalidade de alterar o cadastro do paciente ou
+  médico respectivamente, passando o `id` no corpo da requisição JSON com as outras chaves que desejamos alterar.
+  Obtendo a resposta da requisição de detalhamento acima, vamos passar a seguinte alteração para `PUT /pacientes`:
+
+  ```json
+    {
+    "id": "1",
+    "nome": "Maria Joaquina",
+    "telefone": "19982210064"
+    }
+  ```
+  A resposta será um JSON com os dados do paciente ou médico alterados com o `id` informado. No caso, a resposta seria
+  a seguinte:
+
+  ```json
+    {
+    "id": 1,
+    "nome": "Maria Joaquina",
+    "email": "priscila@yahoo.com",
+    "cpf": "11111111111",
+    "telefone": "19982210064",
+    "endereco": {
+      "logradouro": "Rua dos bobos",
+      "bairro": "bairro dos bobos",
+      "cep": "12345678",
+      "cidade": "Cidade dos bobos",
+      "uf": "MG",
+      "numero": "0",
+      "complemento": ""
+      }
+    }
+  ```
+  Note que o id do paciente continua o mesmo, alteramos o `nome` e `telefone`, dessa forma a resposta foi o JSON da
+  alteração executada com sucesso!
+
+  ####
+
+  Caso não seja passado o id do paciente ou médico, a resposta será um JSON com o `campo` e `mensagem` de erro.
+
+  ```json
+  [
+    {
+        "campo": "id",
+        "mensagem": "não deve ser nulo"
+    }
+  ]
+  ```
 
 ####
 
@@ -169,3 +220,74 @@ Vollmed é um projeto que simula o back-end de uma aplicação mobile de uma cl�
   E, em caso de **erro**, a resposta é um código
   [__HTTP 404__](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status/404), informando que o paciente ou médico com
   o `{id}` não foi encontrado.
+
+####
+
+- `POST /consultas`: Essa rota tem a finalidade de cadastrar uma consulta para um paciente. Deve ser passado no corpo da
+  requisição um JSON com os campos do `idMedico`, `idPaciente`, e a `data`. Exemplo:
+
+  ```json
+  {
+    "idMedico": 7,
+    "idPaciente": 1,
+    "data": "07/05/2023 22:50"
+  }
+  ```
+  A data deve obrigatóriamente ser uma data futura, caso o contrario a resposta será um JSON com o `campo` e `mensagem`
+  de erro.
+
+  ```json
+  [
+    {
+    "campo": "data",
+    "mensagem": "deve ser uma data futura"
+    }
+  ]
+  ```
+  Em caso de sucesso, a resposta será um JSON com os dados da consulta cadastrada:
+
+  ```json
+  {
+    "id": 5,
+    "idMedico": 7,
+    "idPaciente": 1,
+    "data": "2023-08-07T17:00:00"
+  }
+  ```
+  Nessa resposta temos o `id`, `o id do médico`, `o id do paciente` e a `data` da consulta cadastrada no banco de
+  dados. <br/>
+  Temos aqui uma validação da regra de negócio de horário da clínica, o qual deve ser um dia da semana e estar entre as
+  7 e 18h.
+  ```java
+  @Component
+  public class ValidadorHorarioFuncionamentoClinica implements ValidadorAgendamentoConsulta {
+  
+      public void validar(DadosAgendamentoConsulta dados) {
+          var dataConsulta = dados.data();
+          var domingo = dataConsulta.getDayOfWeek().equals(DayOfWeek.SUNDAY);
+          var antesAbertura = dataConsulta.getHour() < 7;
+          var depoisAbertura = dataConsulta.getHour() > 18;
+  
+          if (domingo || antesAbertura || depoisAbertura) {
+              throw new ValidacaoException("Consulta fora do horário de atendimento da clínica.");
+          }
+      }
+  
+  }
+  ```
+
+  ####
+
+- `DELETE /consultas`: Essa rota tem a finalidade de excluir uma consulta cadastrada. Deve ser passado no corpo da
+  requisição um JSON com os campos do `idConsulta` e `motivo` do cancelamento, o qual também é um enum e deve
+  ser `PACIENTE_DESISTIU`, `MEDICO_CANCELOU` ou `OUTROS`.
+
+  ```json
+    {
+    "idConsulta": 5,
+    "motivo": "OUTROS"
+  }
+  ```
+  A resposta da requisição acima será um código 
+  [__HTTP 204__](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status/204), informando que a
+  requisição foi bem sucedida, porém não retornou nada. <br/>
