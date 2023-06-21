@@ -2,10 +2,11 @@
 
 Vollmed é um projeto que simula o back-end de uma aplicação mobile de uma clínica médica.
 
-| :placard: Vitrine.Dev | Guilherme Henrique |
-|-----------------------|--------------------|
-| :sparkles: Nome       | **VollMed-API**    |
-| :label: Tecnologias   | Spring Boot, Java  |
+| :placard: Vitrine.Dev | Guilherme Henrique                                                                        |
+|-----------------------|-------------------------------------------------------------------------------------------|
+| :sparkles: Nome       | **VollMed-API**                                                                           |
+| :label: Tecnologias   | Spring Boot, Java                                                                         |
+| :inbox_tray: Download | [Download Jar](https://raw.githubusercontent.com/guih1886/vollmedAPI/main/vollMedAPI.jar) |
 
 > ### Detalhes do projeto
 > - **Solicitar um token para fazer o login no sistema.**
