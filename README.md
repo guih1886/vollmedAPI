@@ -296,7 +296,7 @@ Vollmed é um projeto que simula o back-end de uma aplicação mobile de uma cl�
 
 ### Imagens
 
-![](#vitrinedev)
-![]()
-![]()
-![]()
+![](https://github.com/guih1886/vollmedAPI/blob/main/src/main/resources/static/reqConsultas.png#vitrinedev)
+![](https://github.com/guih1886/vollmedAPI/blob/main/src/main/resources/static/reqLogin.png)
+![](https://github.com/guih1886/vollmedAPI/blob/main/src/main/resources/static/reqDetalheMedico.png)
+![](https://github.com/guih1886/vollmedAPI/blob/main/src/main/resources/static/reqConsultas.png)
