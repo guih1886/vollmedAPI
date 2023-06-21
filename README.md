@@ -8,14 +8,12 @@ Vollmed é um projeto que simula o back-end de uma aplicação mobile de uma cl�
 | :label: Tecnologias   | Spring Boot, Java                                                                         |
 | :inbox_tray: Download | [Download Jar](https://raw.githubusercontent.com/guih1886/vollmedAPI/main/vollMedAPI.jar) |
 
-> ### Detalhes do projeto
+### Detalhes do projeto
 > - **Solicitar um token para fazer o login no sistema.**
 > - **Cadastrar, Alterar, deletar, listar e detalhar um médico.**
 > - **Cadastrar, Alterar, deletar, listar e detalhar um paciente.**
 > - **Agendar uma consulta.**
 > - **Cancelar uma consulta.**
-
-### Rotas e Exemplos
 
 - `POST /login`: Essa rota recebe através do corpo da requisição um JSON com os dados de `login` e `senha` cadastrado
   previamente no banco de dados, aqui utilizado o MySQL.
