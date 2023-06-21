@@ -291,3 +291,12 @@ Vollmed é um projeto que simula o back-end de uma aplicação mobile de uma cl�
   A resposta da requisição acima será um código 
   [__HTTP 204__](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status/204), informando que a
   requisição foi bem sucedida, porém não retornou nada. <br/>
+
+<!-- Inserir imagem com a #vitrinedev ao final do link -->
+
+### Imagens
+
+![](#vitrinedev)
+![]()
+![]()
+![]()
